@@ -11,17 +11,26 @@ const TodoList = () => {
       {
         id: crypto.randomUUID(),
         content: newTodo,
+        isCompleted: false,
       },
       ...prev,
     ]);
+  };
+
+  const updateTodo = (id: Todo['id']) => {
+    setTodoList((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+      )
+    );
   };
 
   return (
     <div>
       <TodoForm addTodo={addTodo} />
       <ul>
-        {todoList.map(({ id, content }) => (
-          <TodoItem key={id} content={content} />
+        {todoList.map((todo) => (
+          <TodoItem key={todo.id} todo={todo} updateTodo={updateTodo} />
         ))}
       </ul>
     </div>
