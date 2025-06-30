@@ -1,23 +1,19 @@
-const todoList = [
-  { id: 1, text: 'Buy milk' },
-  { id: 2, text: 'Clean the house' },
-  { id: 3, text: 'Go for a run' },
-  { id: 4, text: 'Finish homework' },
-  { id: 5, text: 'Call mom' },
-  { id: 6, text: 'Buy groceries' },
-  { id: 7, text: 'Walk the dog' },
-  { id: 8, text: 'Read a book' },
-  { id: 9, text: 'Do laundry' },
-  { id: 10, text: 'Write code' },
-];
+import { useState } from 'react';
+import TodoForm from './TodoForm';
+import type { Todo } from '../types/todo.type';
 
 const TodoList = () => {
+  const [todoList, setTodoList] = useState<Todo[]>([]);
+
   return (
-    <ul>
-      {todoList.map(({ id, text }) => (
-        <li key={id}>{text}</li>
-      ))}
-    </ul>
+    <div>
+      <TodoForm setTodoList={setTodoList} />
+      <ul>
+        {todoList.map(({ id, content }) => (
+          <li key={id}>{content}</li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
