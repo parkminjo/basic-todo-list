@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Todo } from '../types/todo.type';
 
 interface Props {
@@ -19,12 +18,14 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: Props) => {
   };
 
   return (
-    <li>
+    <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
       <input type="checkbox" checked={isCompleted} onChange={handleChange} />
-      {content}
+      <p style={{ textDecoration: isCompleted ? 'line-through' : 'none' }}>
+        {content}
+      </p>
       <button onClick={handleClick}>삭제</button>
     </li>
   );
 };
 
-export default React.memo(TodoItem);
+export default TodoItem;
