@@ -1,13 +1,31 @@
+import { useState } from 'react';
+import type { Todo } from '../types/todo.type';
+
 interface Props {
-  newTodo: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  addTodo: (newTodo: Todo['content']) => void;
 }
 
-const TodoForm = ({ newTodo, onChange, onSubmit }: Props) => {
+const TodoForm = ({ addTodo }: Props) => {
+  const [newTodo, setNewTodo] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTodo(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!newTodo.trim()) {
+      return;
+    }
+
+    addTodo(newTodo);
+    setNewTodo('');
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" value={newTodo} onChange={onChange} />
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={newTodo} onChange={handleChange} />
     </form>
   );
 };

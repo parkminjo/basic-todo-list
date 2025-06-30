@@ -1,17 +1,24 @@
+import { useState } from 'react';
 import TodoForm from './TodoForm';
-import { useTodo } from '../hooks/useTodo';
 import TodoItem from './TodoItem';
+import type { Todo } from '../types/todo.type';
 
 const TodoList = () => {
-  const { todoList, newTodo, handleChange, handleSubmit } = useTodo();
+  const [todoList, setTodoList] = useState<Todo[]>([]);
+
+  const addTodo = (newTodo: Todo['content']) => {
+    setTodoList((prev) => [
+      {
+        id: crypto.randomUUID(),
+        content: newTodo,
+      },
+      ...prev,
+    ]);
+  };
 
   return (
     <div>
-      <TodoForm
-        newTodo={newTodo}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
+      <TodoForm addTodo={addTodo} />
       <ul>
         {todoList.map(({ id, content }) => (
           <TodoItem key={id} content={content} />
