@@ -1,13 +1,16 @@
-import { useState } from 'react';
 import TodoForm from './TodoForm';
-import type { Todo } from '../types/todo.type';
+import { useTodo } from '../hooks/useTodo';
 
 const TodoList = () => {
-  const [todoList, setTodoList] = useState<Todo[]>([]);
+  const { todoList, newTodo, handleChange, handleSubmit } = useTodo();
 
   return (
     <div>
-      <TodoForm setTodoList={setTodoList} />
+      <TodoForm
+        newTodo={newTodo}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+      />
       <ul>
         {todoList.map(({ id, content }) => (
           <li key={id}>{content}</li>
