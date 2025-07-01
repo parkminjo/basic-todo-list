@@ -1,4 +1,5 @@
 import { useTodoList } from '../../hooks/useTodoList';
+import TodoDashboard from './TodoDashboard';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
@@ -7,6 +8,7 @@ const TodoContainer = () => {
 
   return (
     <div>
+      <TodoDashboard todoList={todoList} />
       <TodoForm addTodo={addTodo} />
       <TodoList
         todoList={todoList}
