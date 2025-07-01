@@ -6,26 +6,26 @@ interface Props {
 }
 
 const TodoForm = ({ addTodo }: Props) => {
-  const [newTodo, setNewTodo] = useState('');
+  const [content, setContent] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTodo(event.target.value);
+    setContent(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!newTodo.trim()) {
+    if (!content.trim()) {
       return;
     }
 
-    addTodo(newTodo);
-    setNewTodo('');
+    addTodo(content);
+    setContent('');
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" value={newTodo} onChange={handleChange} />
+      <input type="text" value={content} onChange={handleChange} />
     </form>
   );
 };

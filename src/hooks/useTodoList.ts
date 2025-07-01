@@ -4,11 +4,11 @@ import type { Todo } from '../types/todo.type';
 export const useTodoList = () => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
 
-  const addTodo = (newTodo: Todo['content']) => {
+  const addTodo = (content: Todo['content']) => {
     setTodoList((prev) => [
       {
         id: crypto.randomUUID(),
-        content: newTodo,
+        content,
         isCompleted: false,
       },
       ...prev,
