@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useTodoList } from '../../hooks/useTodoList';
 import TodoDashboard from './TodoDashboard';
 import TodoForm from './TodoForm';
@@ -7,16 +8,22 @@ const TodoContainer = () => {
   const { todoList, addTodo, updateTodo, deleteTodo } = useTodoList();
 
   return (
-    <div>
+    <TodoContainerWrapper>
       <TodoDashboard todoList={todoList} />
-      <TodoForm addTodo={addTodo} />
       <TodoList
         todoList={todoList}
         updateTodo={updateTodo}
         deleteTodo={deleteTodo}
       />
-    </div>
+      <TodoForm addTodo={addTodo} />
+    </TodoContainerWrapper>
   );
 };
+
+const TodoContainerWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`;
 
 export default TodoContainer;
