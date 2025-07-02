@@ -82,6 +82,8 @@ const TodoDashboardCard = styled.button<{ $bgColor?: string }>`
   background-color: ${({ $bgColor = '#e6582b' }) => $bgColor};
   color: white;
   cursor: pointer;
+
+  aspect-ratio: 1/1;
 `;
 
 const TodoDashboardCardContent = styled.p`

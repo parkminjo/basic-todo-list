@@ -31,6 +31,8 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: Props) => {
 const TodoItemWrapper = styled.li`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
   align-items: center;
   justify-content: space-between;
   background-color: white;
@@ -47,6 +49,7 @@ const TodoItemText = styled.p<{ $isCompleted: boolean }>`
 const TodoItemActions = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 1rem;
 `;
 
@@ -57,6 +60,7 @@ export const ActionButton = styled.button<{ $bgColor?: string }>`
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  word-break: keep-all;
 
   &:hover {
     opacity: 0.8;

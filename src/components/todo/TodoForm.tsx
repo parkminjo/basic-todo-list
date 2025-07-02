@@ -43,11 +43,12 @@ const TodoForm = ({ addTodo }: Props) => {
 const TodoFormWrapper = styled.form`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
 const TodoFormInput = styled.input`
-  flex: 1;
+  flex: 8;
   font-size: 0.5rem 1rem;
   padding: 1rem;
   background-color: white;
@@ -64,6 +65,9 @@ const TodoFormInput = styled.input`
   }
 `;
 
-const SubmitButton = styled(ActionButton)``;
+const SubmitButton = styled(ActionButton)`
+  flex: 1;
+  text-align: center;
+`;
 
 export default TodoForm;

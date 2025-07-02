@@ -21,6 +21,7 @@ const MainContainer = styled.main`
 const MainContent = styled.div`
   max-width: 768px;
   margin: 0 auto;
+  padding: 1.5rem;
 `;
 
 export default RootLayout;
