@@ -13,7 +13,7 @@ const TodoDashboard = () => {
 
   const all = todoList.length;
   const completed = todoList.filter((todo) => todo.isCompleted).length;
-  const pending = todoList.filter((todo) => !todo.isCompleted).length;
+  const pending = all - completed;
 
   return (
     <TodoDashboardSection>
