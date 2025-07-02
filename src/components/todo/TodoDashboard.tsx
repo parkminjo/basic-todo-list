@@ -1,13 +1,20 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { FileCheck, Laptop, Video } from 'lucide-react';
+import { TodoContext } from '../../context/TodoContext';
 
-interface Props {
-  all: number;
-  completed: number;
-  pending: number;
-}
+const TodoDashboard = () => {
+  const context = useContext(TodoContext);
+  if (!context)
+    throw new Error(
+      'TodoDashboard는 반드시 TodoProvider 안에서 사용해야 합니다.'
+    );
+  const { todoList } = context;
 
-const TodoDashboard = ({ all = 0, completed = 0, pending = 0 }: Props) => {
+  const all = todoList.length;
+  const completed = todoList.filter((todo) => todo.isCompleted).length;
+  const pending = todoList.filter((todo) => !todo.isCompleted).length;
+
   return (
     <TodoDashboardSection>
       <TodoDashboardHeader>Quick Access</TodoDashboardHeader>
