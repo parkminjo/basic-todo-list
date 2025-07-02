@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { FileCheck, Laptop, Video } from 'lucide-react';
+import { File, FileCheck, Folders } from 'lucide-react';
 import { TodoContext } from '../../context/TodoContext';
 
 const TodoDashboard = () => {
@@ -22,7 +22,7 @@ const TodoDashboard = () => {
         <TodoDashboardCardWrapper $flex={2}>
           <TodoDashboardCard>
             <div>
-              <FileCheck />
+              <Folders />
             </div>
             <TodoDashboardCardContent>
               {all} <br />
@@ -33,7 +33,7 @@ const TodoDashboard = () => {
         <TodoDashboardCardWrapper>
           <TodoDashboardCard $bgColor="#582be7">
             <div>
-              <Laptop />
+              <FileCheck />
             </div>
             <TodoDashboardCardContent>
               {completed} <br />
@@ -44,7 +44,7 @@ const TodoDashboard = () => {
         <TodoDashboardCardWrapper>
           <TodoDashboardCard $bgColor="#242424">
             <div>
-              <Video />
+              <File />
             </div>
             <TodoDashboardCardContent>
               {pending} <br />
