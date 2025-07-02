@@ -20,7 +20,7 @@ const TodoItem = ({ todo }: Props) => {
       <TodoItemText $isCompleted={isCompleted}>{content}</TodoItemText>
       <TodoItemActions>
         <ActionButton
-          $bgColor={isCompleted ? '#242424' : '#582be7'}
+          $bgColor={isCompleted ? '#582be7' : '#242424'}
           onClick={() => updateTodo(id)}
         >
           {isCompleted ? '취소하기' : '완료하기'}
