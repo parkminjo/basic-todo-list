@@ -50,7 +50,7 @@ const TodoItemActions = styled.div`
   gap: 1rem;
 `;
 
-const ActionButton = styled.button<{ $bgColor?: string }>`
+export const ActionButton = styled.button<{ $bgColor?: string }>`
   background-color: ${({ $bgColor = '#e6582b' }) => $bgColor};
   color: white;
   border: none;
