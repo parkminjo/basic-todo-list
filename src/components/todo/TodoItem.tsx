@@ -1,13 +1,18 @@
 import styled from 'styled-components';
 import type { Todo } from '../../types/todo.type';
+import { useContext } from 'react';
+import { TodoContext } from '../../context/TodoContext';
 
 interface Props {
   todo: Todo;
-  updateTodo: (id: Todo['id']) => void;
-  deleteTodo: (id: Todo['id']) => void;
 }
 
-const TodoItem = ({ todo, updateTodo, deleteTodo }: Props) => {
+const TodoItem = ({ todo }: Props) => {
+  const context = useContext(TodoContext);
+  if (!context)
+    throw new Error('TodoItem는 반드시 TodoProvider 안에서 사용해야 합니다.');
+  const { updateTodo, deleteTodo } = context;
+
   const { id, content, isCompleted } = todo;
 
   return (

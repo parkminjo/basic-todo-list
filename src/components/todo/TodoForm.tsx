@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { ActionButton } from './TodoItem';
-import type { Todo } from '../../types/todo.type';
+import { TodoContext } from '../../context/TodoContext';
 
-interface Props {
-  addTodo: (newTodo: Todo['content']) => void;
-}
+const TodoForm = () => {
+  const context = useContext(TodoContext);
+  if (!context)
+    throw new Error('TodoForm은 반드시 TodoProvider 안에서 사용해야 합니다.');
+  const { addTodo } = context;
 
-const TodoForm = ({ addTodo }: Props) => {
   const [content, setContent] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
