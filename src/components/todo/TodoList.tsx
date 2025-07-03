@@ -36,7 +36,7 @@ const TodoListSection = styled.section`
 `;
 
 const TodoListHeader = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
 `;
 
