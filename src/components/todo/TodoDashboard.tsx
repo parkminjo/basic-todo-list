@@ -1,26 +1,32 @@
 import { useContext } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { File, FileCheck, Folders } from 'lucide-react';
 import { TodoContext } from '../../context/TodoContext';
+import { PATH } from '../../constants/path';
+import { TODO_STATUS } from '../../constants/todo';
 
 const TodoDashboard = () => {
+  const [searchParams] = useSearchParams();
+  const selectedFilter = searchParams.get('filter');
+
   const context = useContext(TodoContext);
   if (!context)
     throw new Error(
       'TodoDashboard는 반드시 TodoProvider 안에서 사용해야 합니다.'
     );
-  const { todoList } = context;
+  const { getFilteredTodoList } = context;
 
-  const all = todoList.length;
-  const completed = todoList.filter((todo) => todo.isCompleted).length;
-  const pending = all - completed;
+  const all = getFilteredTodoList().length;
+  const completed = getFilteredTodoList('completed').length;
+  const pending = getFilteredTodoList('pending').length;
 
   return (
     <TodoDashboardSection>
       <TodoDashboardHeader>Quick Access</TodoDashboardHeader>
       <TodoDashboardCardList>
         <TodoDashboardCardWrapper $flex={2}>
-          <TodoDashboardCard>
+          <TodoDashboardCard to={PATH.HOME} $isSelected={!selectedFilter}>
             <div>
               <Folders />
             </div>
@@ -31,7 +37,11 @@ const TodoDashboard = () => {
           </TodoDashboardCard>
         </TodoDashboardCardWrapper>
         <TodoDashboardCardWrapper>
-          <TodoDashboardCard $bgColor="#582be7">
+          <TodoDashboardCard
+            to="?filter=completed"
+            $isSelected={selectedFilter === TODO_STATUS.COMPLETED}
+            $bgColor="#582be7"
+          >
             <div>
               <FileCheck />
             </div>
@@ -42,7 +52,11 @@ const TodoDashboard = () => {
           </TodoDashboardCard>
         </TodoDashboardCardWrapper>
         <TodoDashboardCardWrapper>
-          <TodoDashboardCard $bgColor="#242424">
+          <TodoDashboardCard
+            to="?filter=pending"
+            $isSelected={selectedFilter === TODO_STATUS.PENDING}
+            $bgColor="#242424"
+          >
             <div>
               <File />
             </div>
@@ -78,7 +92,10 @@ const TodoDashboardCardWrapper = styled.li<{ $flex?: number }>`
   flex: ${({ $flex = 1 }) => $flex};
 `;
 
-const TodoDashboardCard = styled.button<{ $bgColor?: string }>`
+const TodoDashboardCard = styled(Link)<{
+  $bgColor?: string;
+  $isSelected?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -89,6 +106,7 @@ const TodoDashboardCard = styled.button<{ $bgColor?: string }>`
   background-color: ${({ $bgColor = '#e6582b' }) => $bgColor};
   color: white;
   cursor: pointer;
+  text-decoration: ${({ $isSelected }) => ($isSelected ? 'underline' : 'none')};
 
   aspect-ratio: 1/1;
 `;

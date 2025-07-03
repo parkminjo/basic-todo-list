@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TodoContext } from '../../context/TodoContext';
+import { TODO_STATUS } from '../../constants/todo';
 import type { Todo } from '../../types/todo.type';
 
 interface Props {
@@ -32,11 +33,23 @@ const TodoProvider = ({ children }: Props) => {
     setTodoList((prev) => prev.filter((todo) => todo.id !== id));
   };
 
+  const getFilteredTodoList = (selectedFilter?: string | null) => {
+    switch (selectedFilter) {
+      case TODO_STATUS.COMPLETED:
+        return todoList.filter((todo) => todo.isCompleted);
+      case TODO_STATUS.PENDING:
+        return todoList.filter((todo) => !todo.isCompleted);
+      default:
+        return todoList;
+    }
+  };
+
   const value = {
     todoList,
     addTodo,
     updateTodo,
     deleteTodo,
+    getFilteredTodoList,
   };
 
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
