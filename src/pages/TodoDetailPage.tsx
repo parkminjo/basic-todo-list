@@ -12,8 +12,10 @@ const TodoDetailPage = () => {
     throw new Error(
       'TodoDetailPage는 반드시 TodoProvider 안에서 사용해야 합니다.'
     );
-  const { todoList } = context;
-  const targetTodoItem = todoList.find((todo) => todo.id === id);
+  const {
+    data: { all },
+  } = context;
+  const targetTodoItem = all.find((todo) => todo.id === id);
 
   return (
     <TodoDetailWrapper>
