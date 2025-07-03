@@ -15,13 +15,13 @@ const TodoDetailPage = () => {
   const { todoList } = context;
   const targetTodoItem = todoList.find((todo) => todo.id === id);
 
-  if (!targetTodoItem) {
-    return <div>해당하는 Todo 항목이 없습니다.</div>;
-  }
-
   return (
     <TodoDetailWrapper>
-      <TodoItem todo={targetTodoItem} />
+      {!targetTodoItem ? (
+        <p>해당하는 Todo 항목이 없습니다.</p>
+      ) : (
+        <TodoItem todo={targetTodoItem} />
+      )}
       <BackLink to={PATH.HOME}>
         <ActionButton $bgColor="#242424">돌아가기</ActionButton>
       </BackLink>

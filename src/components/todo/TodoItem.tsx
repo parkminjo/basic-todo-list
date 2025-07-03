@@ -2,19 +2,27 @@ import styled from 'styled-components';
 import type { Todo } from '../../types/todo.type';
 import { useContext } from 'react';
 import { TodoContext } from '../../context/TodoContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { PATH } from '../../constants/path';
 
 interface Props {
   todo: Todo;
 }
 
 const TodoItem = ({ todo }: Props) => {
+  const navigate = useNavigate();
+
   const context = useContext(TodoContext);
   if (!context)
     throw new Error('TodoItem는 반드시 TodoProvider 안에서 사용해야 합니다.');
   const { updateTodo, deleteTodo } = context;
 
   const { id, content, isCompleted } = todo;
+
+  const navigateAfterDelete = () => {
+    deleteTodo(id);
+    navigate(PATH.HOME);
+  };
 
   return (
     <TodoItemWrapper>
@@ -28,7 +36,7 @@ const TodoItem = ({ todo }: Props) => {
         >
           {isCompleted ? '취소하기' : '완료하기'}
         </ActionButton>
-        <ActionButton $bgColor="#ff4033" onClick={() => deleteTodo(id)}>
+        <ActionButton $bgColor="#ff4033" onClick={navigateAfterDelete}>
           삭제하기
         </ActionButton>
       </TodoItemActions>
