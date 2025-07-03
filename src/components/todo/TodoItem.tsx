@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import type { Todo } from '../../types/todo.type';
 import { useContext } from 'react';
 import { TodoContext } from '../../context/TodoContext';
+import { Link } from 'react-router-dom';
 
 interface Props {
   todo: Todo;
@@ -17,7 +18,9 @@ const TodoItem = ({ todo }: Props) => {
 
   return (
     <TodoItemWrapper>
-      <TodoItemText $isCompleted={isCompleted}>{content}</TodoItemText>
+      <TodoItemLink to={`/todo/${id}`} $isCompleted={isCompleted}>
+        {content}
+      </TodoItemLink>
       <TodoItemActions>
         <ActionButton
           $bgColor={isCompleted ? '#582be7' : '#242424'}
@@ -46,9 +49,13 @@ const TodoItemWrapper = styled.li`
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
-const TodoItemText = styled.p<{ $isCompleted: boolean }>`
+const TodoItemLink = styled(Link)<{ $isCompleted: boolean }>`
   text-decoration: ${({ $isCompleted }) =>
     $isCompleted ? 'line-through' : 'none'};
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const TodoItemActions = styled.div`
