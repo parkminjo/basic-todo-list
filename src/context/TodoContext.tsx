@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import type { Todo } from '../types/todo.type';
 
 interface TodoContextType {
-  todoList: Todo[];
+  data: Record<string, Todo[]>;
   addTodo: (content: Todo['content']) => void;
   deleteTodo: (id: Todo['id']) => void;
   updateTodo: (id: Todo['id']) => void;

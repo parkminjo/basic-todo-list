@@ -45,7 +45,11 @@ const TodoProvider = ({ children }: Props) => {
   };
 
   const value = {
-    todoList,
+    data: {
+      all: todoList,
+      completed: getFilteredTodoList(TODO_STATUS.COMPLETED),
+      pending: getFilteredTodoList(TODO_STATUS.PENDING),
+    },
     addTodo,
     updateTodo,
     deleteTodo,

@@ -15,11 +15,9 @@ const TodoDashboard = () => {
     throw new Error(
       'TodoDashboard는 반드시 TodoProvider 안에서 사용해야 합니다.'
     );
-  const { getFilteredTodoList } = context;
-
-  const all = getFilteredTodoList().length;
-  const completed = getFilteredTodoList('completed').length;
-  const pending = getFilteredTodoList('pending').length;
+  const {
+    data: { all, completed, pending },
+  } = context;
 
   return (
     <TodoDashboardSection>
@@ -31,7 +29,7 @@ const TodoDashboard = () => {
               <Folders />
             </div>
             <TodoDashboardCardContent>
-              {all} <br />
+              {all.length} <br />
               <span>All Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
@@ -46,7 +44,7 @@ const TodoDashboard = () => {
               <FileCheck />
             </div>
             <TodoDashboardCardContent>
-              {completed} <br />
+              {completed.length} <br />
               <span>Completed Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
@@ -61,7 +59,7 @@ const TodoDashboard = () => {
               <File />
             </div>
             <TodoDashboardCardContent>
-              {pending} <br />
+              {pending.length} <br />
               <span>Todo Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
