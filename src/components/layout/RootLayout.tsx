@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './Header';
+import { COLOR } from '../../styles/color';
 
 // Compositional Layout
 const RootLayout = () => {
@@ -16,7 +17,7 @@ const RootLayout = () => {
 
 const MainContainer = styled.main`
   min-height: 100vh;
-  background-color: #f6f5f8;
+  background-color: ${COLOR.BEIGE};
 `;
 
 const MainContent = styled.div`

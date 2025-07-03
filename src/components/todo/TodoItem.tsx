@@ -4,6 +4,7 @@ import { TodoContext } from '../../context/TodoContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../constants/path';
 import type { Todo } from '../../types/todo.type';
+import { COLOR } from '../../styles/color';
 
 interface Props {
   todo: Todo;
@@ -31,12 +32,12 @@ const TodoItem = ({ todo }: Props) => {
       </TodoItemLink>
       <TodoItemActions>
         <ActionButton
-          $bgColor={isCompleted ? '#582be7' : '#242424'}
+          $bgColor={isCompleted ? COLOR.PURPLE : COLOR.BLACK}
           onClick={() => updateTodo(id)}
         >
           {isCompleted ? '취소하기' : '완료하기'}
         </ActionButton>
-        <ActionButton $bgColor="#ff4033" onClick={navigateAfterDelete}>
+        <ActionButton $bgColor={COLOR.RED} onClick={navigateAfterDelete}>
           삭제하기
         </ActionButton>
       </TodoItemActions>
@@ -74,7 +75,7 @@ const TodoItemActions = styled.div`
 `;
 
 export const ActionButton = styled.button<{ $bgColor?: string }>`
-  background-color: ${({ $bgColor = '#e6582b' }) => $bgColor};
+  background-color: ${({ $bgColor = COLOR.ORANGE }) => $bgColor};
   color: white;
   border: none;
   padding: 0.5rem 1rem;

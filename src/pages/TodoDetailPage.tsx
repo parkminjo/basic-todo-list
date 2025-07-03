@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { TodoContext } from '../context/TodoContext';
 import TodoItem, { ActionButton } from '../components/todo/TodoItem';
 import { PATH } from '../constants/path';
-import styled from 'styled-components';
+import { COLOR } from '../styles/color';
 
 const TodoDetailPage = () => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const TodoDetailPage = () => {
         <TodoItem todo={targetTodoItem} />
       )}
       <BackLink to={PATH.HOME}>
-        <ActionButton $bgColor="#242424">돌아가기</ActionButton>
+        <ActionButton $bgColor={COLOR.BLACK}>돌아가기</ActionButton>
       </BackLink>
     </TodoDetailWrapper>
   );

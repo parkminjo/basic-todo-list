@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { ActionButton } from './TodoItem';
 import { TodoContext } from '../../context/TodoContext';
+import { COLOR } from '../../styles/color';
 
 const TodoForm = () => {
   const context = useContext(TodoContext);
@@ -35,7 +36,7 @@ const TodoForm = () => {
           onChange={handleChange}
           placeholder="할 일을 입력해주세요."
         />
-        <SubmitButton $bgColor="#582be7">추가하기</SubmitButton>
+        <SubmitButton $bgColor={COLOR.PURPLE}>추가하기</SubmitButton>
       </TodoFormWrapper>
     </div>
   );
@@ -53,15 +54,15 @@ const TodoFormInput = styled.input`
   font-size: 0.5rem 1rem;
   padding: 1rem;
   background-color: white;
-  border: 1px solid #ccc;
+  border: 1px solid ${COLOR.GRAY01};
   border-radius: 0.5rem;
 
   &::placeholder {
-    color: #aaa;
+    color: ${COLOR.GRAY02};
   }
 
   &:focus {
-    border-color: #582be7;
+    border-color: ${COLOR.PURPLE};
     outline: none;
   }
 `;

@@ -5,6 +5,7 @@ import { File, FileCheck, Folders } from 'lucide-react';
 import { TodoContext } from '../../context/TodoContext';
 import { PATH } from '../../constants/path';
 import { TODO_STATUS } from '../../constants/todo';
+import { COLOR } from '../../styles/color';
 
 const TodoDashboard = () => {
   const [searchParams] = useSearchParams();
@@ -38,7 +39,7 @@ const TodoDashboard = () => {
           <TodoDashboardCard
             to="?filter=completed"
             $isSelected={selectedFilter === TODO_STATUS.COMPLETED}
-            $bgColor="#582be7"
+            $bgColor={COLOR.PURPLE}
           >
             <div>
               <FileCheck />
@@ -53,7 +54,7 @@ const TodoDashboard = () => {
           <TodoDashboardCard
             to="?filter=pending"
             $isSelected={selectedFilter === TODO_STATUS.PENDING}
-            $bgColor="#242424"
+            $bgColor={COLOR.BLACK}
           >
             <div>
               <File />
@@ -76,7 +77,7 @@ const TodoDashboardSection = styled.section`
 `;
 
 const TodoDashboardHeader = styled.h2`
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: bold;
 `;
 
@@ -101,7 +102,7 @@ const TodoDashboardCard = styled(Link)<{
   height: 190px;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: ${({ $bgColor = '#e6582b' }) => $bgColor};
+  background-color: ${({ $bgColor = COLOR.ORANGE }) => $bgColor};
   color: white;
   cursor: pointer;
   text-decoration: ${({ $isSelected }) => ($isSelected ? 'underline' : 'none')};
