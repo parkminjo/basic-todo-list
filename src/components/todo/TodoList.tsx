@@ -1,16 +1,13 @@
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
-import { useContext } from 'react';
-import { TodoContext } from '../../context/TodoContext';
 import { useSearchParams } from 'react-router-dom';
+import { useTodoContext } from '../../hooks/useTodoContext';
 
 const TodoList = () => {
   const [searchParams] = useSearchParams();
   const selectedFilter = searchParams.get('filter');
 
-  const context = useContext(TodoContext);
-  if (!context)
-    throw new Error('TodoList는 반드시 TodoProvider 안에서 사용해야 합니다.');
+  const context = useTodoContext('TodoList');
   const { getFilteredTodoList } = context;
 
   const filteredTodoList = getFilteredTodoList(selectedFilter);

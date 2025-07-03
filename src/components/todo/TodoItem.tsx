@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
-import { TodoContext } from '../../context/TodoContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../constants/path';
-import type { Todo } from '../../types/todo.type';
 import { COLOR } from '../../styles/color';
+import { useTodoContext } from '../../hooks/useTodoContext';
+import type { Todo } from '../../types/todo.type';
 
 interface Props {
   todo: Todo;
@@ -13,9 +12,7 @@ interface Props {
 const TodoItem = ({ todo }: Props) => {
   const navigate = useNavigate();
 
-  const context = useContext(TodoContext);
-  if (!context)
-    throw new Error('TodoItem는 반드시 TodoProvider 안에서 사용해야 합니다.');
+  const context = useTodoContext('TodoItem');
   const { updateTodo, deleteTodo } = context;
 
   const { id, content, isCompleted } = todo;

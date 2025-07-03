@@ -1,13 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { ActionButton } from './TodoItem';
-import { TodoContext } from '../../context/TodoContext';
 import { COLOR } from '../../styles/color';
+import { useTodoContext } from '../../hooks/useTodoContext';
 
 const TodoForm = () => {
-  const context = useContext(TodoContext);
-  if (!context)
-    throw new Error('TodoForm은 반드시 TodoProvider 안에서 사용해야 합니다.');
+  const context = useTodoContext('TodoForm');
   const { addTodo } = context;
 
   const [content, setContent] = useState('');

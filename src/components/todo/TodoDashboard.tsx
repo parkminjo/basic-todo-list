@@ -1,21 +1,16 @@
-import { useContext } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { File, FileCheck, Folders } from 'lucide-react';
-import { TodoContext } from '../../context/TodoContext';
 import { PATH } from '../../constants/path';
 import { TODO_STATUS } from '../../constants/todo';
 import { COLOR } from '../../styles/color';
+import { useTodoContext } from '../../hooks/useTodoContext';
 
 const TodoDashboard = () => {
   const [searchParams] = useSearchParams();
   const selectedFilter = searchParams.get('filter');
 
-  const context = useContext(TodoContext);
-  if (!context)
-    throw new Error(
-      'TodoDashboard는 반드시 TodoProvider 안에서 사용해야 합니다.'
-    );
+  const context = useTodoContext('TodoDashboard');
   const {
     data: { all, completed, pending },
   } = context;
