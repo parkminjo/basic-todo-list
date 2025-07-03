@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import type { Todo } from '../../types/todo.type';
 import { useContext } from 'react';
 import { TodoContext } from '../../context/TodoContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../constants/path';
+import type { Todo } from '../../types/todo.type';
 
 interface Props {
   todo: Todo;
