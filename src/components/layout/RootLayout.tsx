@@ -1,14 +1,13 @@
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface Props {
-  children: React.ReactNode;
-}
-
 // Compositional Layout
-const RootLayout = ({ children }: Props) => {
+const RootLayout = () => {
   return (
     <MainContainer>
-      <MainContent>{children}</MainContent>
+      <MainContent>
+        <Outlet />
+      </MainContent>
     </MainContainer>
   );
 };

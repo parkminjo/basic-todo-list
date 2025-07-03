@@ -1,14 +1,23 @@
+import { Route, Routes } from 'react-router-dom';
+import { PATH } from './constants/path';
 import RootLayout from './components/layout/RootLayout';
-import TodoProvider from './components/provider/TodoProvider';
 import TodoContainer from './components/todo/TodoContainer';
+import TodoProvider from './components/provider/TodoProvider';
 
 const App = () => {
   return (
-    <TodoProvider>
-      <RootLayout>
-        <TodoContainer />
-      </RootLayout>
-    </TodoProvider>
+    <Routes>
+      <Route path={PATH.HOME} element={<RootLayout />}>
+        <Route
+          index
+          element={
+            <TodoProvider>
+              <TodoContainer />
+            </TodoProvider>
+          }
+        />
+      </Route>
+    </Routes>
   );
 };
 
