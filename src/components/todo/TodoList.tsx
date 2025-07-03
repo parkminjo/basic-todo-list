@@ -13,9 +13,11 @@ const TodoList = () => {
     <TodoListSection>
       <TodoListHeader>Tasks</TodoListHeader>
       <TodoListContent>
-        {todoList.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} />
-        ))}
+        {todoList.length === 0 ? (
+          <p>추가된 Todo 항목이 없습니다.</p>
+        ) : (
+          todoList.map((todo) => <TodoItem key={todo.id} todo={todo} />)
+        )}
       </TodoListContent>
     </TodoListSection>
   );
