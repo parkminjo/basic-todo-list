@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { TodoContext } from '../context/TodoContext';
 import TodoItem, { ActionButton } from '../components/todo/TodoItem';
+import { PATH } from '../constants/path';
+import styled from 'styled-components';
 
 const TodoDetailPage = () => {
   const { id } = useParams();
@@ -18,13 +20,27 @@ const TodoDetailPage = () => {
   }
 
   return (
-    <div>
+    <TodoDetailWrapper>
       <TodoItem todo={targetTodoItem} />
-      <ActionButton $bgColor="#242424">
-        <Link to="/">돌아가기</Link>
-      </ActionButton>
-    </div>
+      <BackLink to={PATH.HOME}>
+        <ActionButton $bgColor="#242424">돌아가기</ActionButton>
+      </BackLink>
+    </TodoDetailWrapper>
   );
 };
+
+const TodoDetailWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const BackLink = styled(Link)`
+  flex: 1;
+
+  button {
+    width: 100%;
+  }
+`;
 
 export default TodoDetailPage;
