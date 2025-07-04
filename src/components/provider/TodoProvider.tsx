@@ -21,7 +21,7 @@ const TodoProvider = ({ children }: Props) => {
 
       setTodoList(data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -33,7 +33,6 @@ const TodoProvider = ({ children }: Props) => {
   };
 
   const updateTodo = async (id: Todo['id'], currentCompleted: boolean) => {
-    console.log(currentCompleted);
     await supabase
       .from(TODO_LIST_TABLE)
       .update({ completed: !currentCompleted })
@@ -41,8 +40,9 @@ const TodoProvider = ({ children }: Props) => {
     await getTodoList();
   };
 
-  const deleteTodo = (id: Todo['id']) => {
-    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+  const deleteTodo = async (id: Todo['id']) => {
+    await supabase.from(TODO_LIST_TABLE).delete().eq('id', id);
+    await getTodoList();
   };
 
   const getFilteredTodoList = (selectedFilter?: string | null) => {
