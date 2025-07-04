@@ -1,0 +1,1 @@
+export const TODO_LIST_TABLE = 'todo_list';
