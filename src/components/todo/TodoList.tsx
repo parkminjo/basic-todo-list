@@ -8,7 +8,7 @@ const TodoList = () => {
   const selectedFilter = searchParams.get('filter');
 
   const context = useTodoContext('TodoList');
-  const { getFilteredTodoList } = context;
+  const { isLoading, getFilteredTodoList } = context;
 
   const filteredTodoList = getFilteredTodoList(selectedFilter);
 
@@ -16,8 +16,10 @@ const TodoList = () => {
     <TodoListSection>
       <TodoListHeader>Tasks</TodoListHeader>
       <TodoListContent>
-        {filteredTodoList.length === 0 ? (
-          <p>추가된 Todo 항목이 없습니다.</p>
+        {isLoading ? (
+          <p>로딩 중..</p>
+        ) : filteredTodoList.length === 0 ? (
+          <p>추가된 Todo 항복이 없습니다.</p>
         ) : (
           filteredTodoList.map((todo) => <TodoItem key={todo.id} todo={todo} />)
         )}
