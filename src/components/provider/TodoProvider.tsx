@@ -29,7 +29,7 @@ const TodoProvider = ({ children }: Props) => {
         completed: false,
       });
 
-      getTodoList();
+      await getTodoList();
     } catch (error) {
       console.error('할 일 목록 추가 실패', error);
       alert('할 일을 추가하는데 실패하였습니다.');
@@ -42,7 +42,7 @@ const TodoProvider = ({ children }: Props) => {
         completed: !completed,
       });
 
-      getTodoList();
+      await getTodoList();
     } catch (error) {
       console.error('할 일 수정 실패', error);
       alert('할 일을 수정하는데 실패하였습니다.');
@@ -53,7 +53,7 @@ const TodoProvider = ({ children }: Props) => {
     try {
       await todoClient.delete(TODO_API.BY_ID(id));
 
-      getTodoList();
+      await getTodoList();
     } catch (error) {
       console.error('할 일 삭제 실패', error);
       alert('할 일을 삭제하는데 실패하였습니다.');
