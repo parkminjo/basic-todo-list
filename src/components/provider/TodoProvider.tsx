@@ -48,8 +48,15 @@ const TodoProvider = ({ children }: Props) => {
     }
   };
 
-  const deleteTodo = (id: Todo['id']) => {
-    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+  const deleteTodo = async (id: Todo['id']) => {
+    try {
+      await todoClient.delete(`/${id}`);
+
+      getTodoList();
+    } catch (error) {
+      console.error('할 일 삭제 실패', error);
+      alert('할 일을 삭제하는데 실패하였습니다.');
+    }
   };
 
   const getFilteredTodoList = (selectedFilter?: string | null) => {
