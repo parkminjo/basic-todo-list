@@ -3,6 +3,7 @@ import { TodoContext } from '../../context/TodoContext';
 import { TODO_STATUS } from '../../constants/todo';
 import type { Todo } from '../../types/todo.type';
 import { todoClient } from '../../lib/todoClient';
+import { TODO_API } from '../../constants/apiPath';
 
 interface Props {
   children: React.ReactNode;
@@ -13,7 +14,7 @@ const TodoProvider = ({ children }: Props) => {
 
   const getTodoList = async () => {
     try {
-      const { data } = await todoClient.get('/');
+      const { data } = await todoClient.get(TODO_API.ROOT);
       setTodoList(data);
     } catch (error) {
       console.error('할 일 목록 불러오기 실패', error);
@@ -23,7 +24,7 @@ const TodoProvider = ({ children }: Props) => {
 
   const addTodo = async (content: Todo['content']) => {
     try {
-      await todoClient.post('/', {
+      await todoClient.post(TODO_API.ROOT, {
         content,
         completed: false,
       });
@@ -37,7 +38,7 @@ const TodoProvider = ({ children }: Props) => {
 
   const updateTodo = async (id: Todo['id'], completed: Todo['completed']) => {
     try {
-      await todoClient.patch(`/${id}`, {
+      await todoClient.patch(TODO_API.BY_ID(id), {
         completed: !completed,
       });
 
@@ -50,7 +51,7 @@ const TodoProvider = ({ children }: Props) => {
 
   const deleteTodo = async (id: Todo['id']) => {
     try {
-      await todoClient.delete(`/${id}`);
+      await todoClient.delete(TODO_API.BY_ID(id));
 
       getTodoList();
     } catch (error) {
