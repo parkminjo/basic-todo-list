@@ -36,10 +36,13 @@ const TodoProvider = ({ children }: Props) => {
     }
   };
 
-  const updateTodo = async (id: Todo['id'], completed: Todo['completed']) => {
+  const updateTodo = async (
+    id: Todo['id'],
+    currentCompleted: Todo['completed']
+  ) => {
     try {
       await todoClient.patch(TODO_API.BY_ID(id), {
-        completed: !completed,
+        completed: !currentCompleted,
       });
 
       await getTodoList();
