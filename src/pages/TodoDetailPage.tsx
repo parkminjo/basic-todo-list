@@ -1,22 +1,17 @@
-import { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { TodoContext } from '../context/TodoContext';
 import TodoItem, { ActionButton } from '../components/todo/TodoItem';
 import { PATH } from '../constants/path';
+import { useTodoContext } from '../hooks/useTodoContext';
 import { COLOR } from '../styles/color';
 
 const TodoDetailPage = () => {
   const { id } = useParams();
-  const context = useContext(TodoContext);
-  if (!context)
-    throw new Error(
-      'TodoDetailPage는 반드시 TodoProvider 안에서 사용해야 합니다.'
-    );
+  const context = useTodoContext('TodoDetailPage');
   const {
     data: { all },
   } = context;
-  const targetTodoItem = all.find((todo) => todo.id === id);
+  const targetTodoItem = all.find((todo) => todo.id === Number(id));
 
   return (
     <TodoDetailWrapper>
