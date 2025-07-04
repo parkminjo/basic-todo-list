@@ -13,36 +13,73 @@ const TodoProvider = ({ children }: Props) => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getTodoById = async (id: Todo['id']) => {
+    try {
+      const { data, error } = await supabase
+        .from(TODO_LIST_TABLE)
+        .select()
+        .eq('id', id)
+        .single();
+
+      if (error) throw new Error(error.message);
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   const getTodoList = async () => {
     try {
       const { data, error } = await supabase.from(TODO_LIST_TABLE).select();
-
       if (error) throw new Error(error.message);
 
       setTodoList(data);
     } catch (error) {
       console.error(error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
   const addTodo = async (content: Todo['content']) => {
-    await supabase.from(TODO_LIST_TABLE).insert({ content, completed: false });
-    await getTodoList(); // 새로운 할 일 목록을 가져오도록 함
+    try {
+      await supabase
+        .from(TODO_LIST_TABLE)
+        .insert({ content, completed: false });
+
+      await getTodoList(); // 새로운 할 일 목록을 가져오도록 함
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   const updateTodo = async (id: Todo['id'], currentCompleted: boolean) => {
-    await supabase
-      .from(TODO_LIST_TABLE)
-      .update({ completed: !currentCompleted })
-      .eq('id', id);
-    await getTodoList();
+    try {
+      await supabase
+        .from(TODO_LIST_TABLE)
+        .update({ completed: !currentCompleted })
+        .eq('id', id);
+
+      await getTodoList();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   const deleteTodo = async (id: Todo['id']) => {
-    await supabase.from(TODO_LIST_TABLE).delete().eq('id', id);
-    await getTodoList();
+    try {
+      await supabase.from(TODO_LIST_TABLE).delete().eq('id', id);
+
+      await getTodoList();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   const getFilteredTodoList = (selectedFilter?: string | null) => {
@@ -67,6 +104,7 @@ const TodoProvider = ({ children }: Props) => {
       pending: getFilteredTodoList(TODO_STATUS.PENDING),
     },
     isLoading,
+    getTodoById,
     addTodo,
     updateTodo,
     deleteTodo,
