@@ -11,22 +11,22 @@ export type Database = {
     Tables: {
       todo_list: {
         Row: {
+          completed: boolean
           content: string
           created_at: string
           id: number
-          is_completed: boolean
         }
         Insert: {
+          completed?: boolean
           content: string
           created_at?: string
           id?: number
-          is_completed?: boolean
         }
         Update: {
+          completed?: boolean
           content?: string
           created_at?: string
           id?: number
-          is_completed?: boolean
         }
         Relationships: []
       }
