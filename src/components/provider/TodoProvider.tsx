@@ -35,12 +35,17 @@ const TodoProvider = ({ children }: Props) => {
     }
   };
 
-  const updateTodo = (id: Todo['id']) => {
-    setTodoList((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-      )
-    );
+  const updateTodo = async (id: Todo['id'], completed: Todo['completed']) => {
+    try {
+      await todoClient.patch(`/${id}`, {
+        completed: !completed,
+      });
+
+      getTodoList();
+    } catch (error) {
+      console.error('할 일 수정 실패', error);
+      alert('할 일을 수정하는데 실패하였습니다.');
+    }
   };
 
   const deleteTodo = (id: Todo['id']) => {
@@ -50,9 +55,9 @@ const TodoProvider = ({ children }: Props) => {
   const getFilteredTodoList = (selectedFilter?: string | null) => {
     switch (selectedFilter) {
       case TODO_STATUS.COMPLETED:
-        return todoList.filter((todo) => todo.isCompleted);
+        return todoList.filter((todo) => todo.completed);
       case TODO_STATUS.PENDING:
-        return todoList.filter((todo) => !todo.isCompleted);
+        return todoList.filter((todo) => !todo.completed);
       default:
         return todoList;
     }
