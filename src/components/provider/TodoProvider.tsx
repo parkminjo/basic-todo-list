@@ -21,15 +21,18 @@ const TodoProvider = ({ children }: Props) => {
     }
   };
 
-  const addTodo = (content: Todo['content']) => {
-    setTodoList((prev) => [
-      {
-        id: crypto.randomUUID(),
+  const addTodo = async (content: Todo['content']) => {
+    try {
+      await todoClient.post('/', {
         content,
-        isCompleted: false,
-      },
-      ...prev,
-    ]);
+        completed: false,
+      });
+
+      getTodoList();
+    } catch (error) {
+      console.error('할 일 목록 추가 실패', error);
+      alert('할 일을 추가하는데 실패하였습니다.');
+    }
   };
 
   const updateTodo = (id: Todo['id']) => {
