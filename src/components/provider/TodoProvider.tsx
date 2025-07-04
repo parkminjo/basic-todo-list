@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { TodoContext } from '../../context/TodoContext';
 import { TODO_STATUS } from '../../constants/todo';
-import type { Todo } from '../../types/todo.type';
 import { todoClient } from '../../lib/todoClient';
 import { TODO_API } from '../../constants/apiPath';
+import type { Todo } from '../../types/todo.type';
 
 interface Props {
   children: React.ReactNode;
@@ -13,9 +13,19 @@ const TodoProvider = ({ children }: Props) => {
   const [todoList, setTodoList] = useState<Todo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getTodo = async (id: Todo['id']) => {
+    try {
+      const { data }: { data: Todo } = await todoClient.get(TODO_API.BY_ID(id));
+      return data;
+    } catch (error) {
+      console.error('할 일 불러오기 실패', error);
+      throw error;
+    }
+  };
+
   const getTodoList = async () => {
     try {
-      const { data } = await todoClient.get(TODO_API.ROOT);
+      const { data }: { data: Todo[] } = await todoClient.get(TODO_API.ROOT);
       setTodoList(data);
     } catch (error) {
       console.error('할 일 목록 불러오기 실패', error);
@@ -88,6 +98,7 @@ const TodoProvider = ({ children }: Props) => {
       pending: getFilteredTodoList(TODO_STATUS.PENDING),
     },
     isLoading,
+    getTodo,
     addTodo,
     updateTodo,
     deleteTodo,
