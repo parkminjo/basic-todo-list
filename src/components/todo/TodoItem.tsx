@@ -15,7 +15,7 @@ const TodoItem = ({ todo }: Props) => {
   const context = useTodoContext('TodoItem');
   const { updateTodo, deleteTodo } = context;
 
-  const { id, content, isCompleted } = todo;
+  const { id, content, completed } = todo;
 
   const navigateAfterDelete = () => {
     deleteTodo(id);
@@ -24,15 +24,15 @@ const TodoItem = ({ todo }: Props) => {
 
   return (
     <TodoItemWrapper>
-      <TodoItemLink to={`/todo/${id}`} $isCompleted={isCompleted}>
+      <TodoItemLink to={`/todo/${id}`} $completed={completed}>
         {content}
       </TodoItemLink>
       <TodoItemActions>
         <ActionButton
-          $bgColor={isCompleted ? COLOR.PURPLE : COLOR.BLACK}
+          $bgColor={completed ? COLOR.PURPLE : COLOR.BLACK}
           onClick={() => updateTodo(id)}
         >
-          {isCompleted ? '취소하기' : '완료하기'}
+          {completed ? '취소하기' : '완료하기'}
         </ActionButton>
         <ActionButton $bgColor={COLOR.RED} onClick={navigateAfterDelete}>
           삭제하기
@@ -55,9 +55,9 @@ const TodoItemWrapper = styled.li`
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
-const TodoItemLink = styled(Link)<{ $isCompleted: boolean }>`
-  text-decoration: ${({ $isCompleted }) =>
-    $isCompleted ? 'line-through' : 'none'};
+const TodoItemLink = styled(Link)<{ $completed: boolean }>`
+  text-decoration: ${({ $completed }) =>
+    $completed ? 'line-through' : 'none'};
 
   &:hover {
     text-decoration: underline;
