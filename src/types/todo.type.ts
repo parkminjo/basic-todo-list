@@ -1,5 +1,4 @@
-export interface Todo {
-  id: string;
-  content: string;
-  isCompleted: boolean;
-}
+import type { Tables } from "./supabase";
+
+export type Todo = Tables<'todo_list'>
+
