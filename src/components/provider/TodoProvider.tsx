@@ -28,17 +28,17 @@ const TodoProvider = ({ children }: Props) => {
   };
 
   const addTodo = async (content: Todo['content']) => {
-    await supabase
-      .from(TODO_LIST_TABLE)
-      .insert({ content, is_completed: false });
+    await supabase.from(TODO_LIST_TABLE).insert({ content, completed: false });
+    await getTodoList(); // 새로운 할 일 목록을 가져오도록 함
   };
 
-  const updateTodo = (id: Todo['id']) => {
-    setTodoList((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, isCompleted: !todo.completed } : todo
-      )
-    );
+  const updateTodo = async (id: Todo['id'], currentCompleted: boolean) => {
+    console.log(currentCompleted);
+    await supabase
+      .from(TODO_LIST_TABLE)
+      .update({ completed: !currentCompleted })
+      .eq('id', id);
+    await getTodoList();
   };
 
   const deleteTodo = (id: Todo['id']) => {

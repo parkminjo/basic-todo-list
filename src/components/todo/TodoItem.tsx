@@ -30,7 +30,7 @@ const TodoItem = ({ todo }: Props) => {
       <TodoItemActions>
         <ActionButton
           $bgColor={completed ? COLOR.PURPLE : COLOR.BLACK}
-          onClick={() => updateTodo(id)}
+          onClick={() => updateTodo(id, completed)}
         >
           {completed ? '취소하기' : '완료하기'}
         </ActionButton>
