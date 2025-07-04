@@ -16,6 +16,7 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
     "styled-components": "^6.1.19",
+    "supabase": ">=1.8.1",
     "the-new-css-reset": "^1.11.3"
   },
   "devDependencies": {
