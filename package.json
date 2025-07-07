@@ -11,6 +11,7 @@
     "server": "json-server --watch db.json --port 4000"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
     "json-server": "^1.0.0-beta.3",
     "lucide-react": "^0.525.0",
