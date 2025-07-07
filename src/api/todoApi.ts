@@ -30,7 +30,7 @@ export const getTodoList = async (filter?: string | null) => {
 			searchParams.append(TODO_STATUS.COMPLETED, 'false');
 		}
 
-		const { data }: { data: Todo[] } =  await todoClient.get(`?${searchParams}`);
+		const { data }: { data: Todo[] } =  await todoClient.get(TODO_API.BY_FILTER(searchParams));
 		return data;
 	} catch (error) {
 		console.error('할 일 목록 불러오기 실패', error);
