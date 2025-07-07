@@ -40,10 +40,7 @@ export const addTodo = async (content: Todo['content']) => {
 		}
 };
 
-export const updateTodo = async (
-		id: Todo['id'],
-		currentCompleted: Todo['completed']
-	) => {
+export const updateTodo = async ({id, currentCompleted} : {id: Todo['id'], currentCompleted: Todo['completed']}) => {
 		try {
 			await todoClient.patch(TODO_API.BY_ID(id), {
 				completed: !currentCompleted,

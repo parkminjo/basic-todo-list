@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../constants/path';
 import { COLOR } from '../../styles/color';
-import { useTodoContext } from '../../hooks/useTodoContext';
+import { useUpdateTodoMutation } from '../../hooks/todo/useUpdateTodoMutation';
+import { useDeleteTodoMutation } from '../../hooks/todo/useDeleteTodoMutation';
 import type { Todo } from '../../types/todo.type';
 
 interface Props {
@@ -12,13 +13,13 @@ interface Props {
 const TodoItem = ({ todo }: Props) => {
   const navigate = useNavigate();
 
-  const context = useTodoContext('TodoItem');
-  const { updateTodo, deleteTodo } = context;
-
   const { id, content, completed } = todo;
 
+  const { mutate: deleteTodoMutate } = useDeleteTodoMutation();
+  const { mutate: updateTodoMutate } = useUpdateTodoMutation();
+
   const navigateAfterDelete = () => {
-    deleteTodo(id);
+    deleteTodoMutate(id);
     navigate(PATH.HOME);
   };
 
@@ -30,7 +31,7 @@ const TodoItem = ({ todo }: Props) => {
       <TodoItemActions>
         <ActionButton
           $bgColor={completed ? COLOR.PURPLE : COLOR.BLACK}
-          onClick={() => updateTodo(id, completed)}
+          onClick={() => updateTodoMutate({ id, currentCompleted: completed })}
         >
           {completed ? '취소하기' : '완료하기'}
         </ActionButton>

@@ -2,13 +2,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ActionButton } from './TodoItem';
 import { COLOR } from '../../styles/color';
-import { useTodoContext } from '../../hooks/useTodoContext';
+import { useAddTodoMutation } from '../../hooks/todo/useAddTodoMutation';
 
 const TodoForm = () => {
-  const context = useTodoContext('TodoForm');
-  const { addTodo } = context;
-
   const [content, setContent] = useState('');
+
+  const { mutate: addTodoMutate } = useAddTodoMutation();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
@@ -21,7 +20,7 @@ const TodoForm = () => {
       return;
     }
 
-    addTodo(content);
+    addTodoMutate(content);
     setContent('');
   };
 
