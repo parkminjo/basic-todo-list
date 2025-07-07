@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
 import { useTodoListQuery } from '../../hooks/todo/useTodoListQuery';
+import { useFilterParams } from '../../hooks/todo/useFilterParams';
 
 const TodoList = () => {
-  const { data: todoList, isPending, isError } = useTodoListQuery();
+  const selectedFilter = useFilterParams();
+
+  const {
+    data: todoList,
+    isPending,
+    isError,
+  } = useTodoListQuery(selectedFilter);
 
   if (isPending) return <div>로딩 중..</div>;
   if (isError) return <div>에러 발생</div>;

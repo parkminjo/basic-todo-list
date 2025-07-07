@@ -1,33 +1,34 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { File, FileCheck, Folders } from 'lucide-react';
 import { PATH } from '../../constants/path';
 import { TODO_STATUS } from '../../constants/todo';
 import { COLOR } from '../../styles/color';
 import { useTodoListQuery } from '../../hooks/todo/useTodoListQuery';
+import { useFilterParams } from '../../hooks/todo/useFilterParams';
 
 const TodoDashboard = () => {
-  const [searchParams] = useSearchParams();
-  const selectedFilter = searchParams.get('filter');
+  const selectedFilter = useFilterParams();
 
-  const { data: todoList, isPending, isError } = useTodoListQuery();
+  const {
+    data: all,
+    isPending: isAllPending,
+    isError: isAllError,
+  } = useTodoListQuery();
+  const {
+    data: completed,
+    isPending: isCompletedPending,
+    isError: isCompletedError,
+  } = useTodoListQuery(TODO_STATUS.COMPLETED);
+  const {
+    data: pending,
+    isPending,
+    isError,
+  } = useTodoListQuery(TODO_STATUS.PENDING);
 
-  const getFilteredTodoList = (filter?: string | null) => {
-    if (!todoList) return [];
-
-    if (!filter) return todoList;
-
-    return todoList.filter((todo) =>
-      filter === 'completed' ? todo.completed : !todo.completed
-    );
-  };
-
-  const all = getFilteredTodoList().length;
-  const completed = getFilteredTodoList(selectedFilter).length;
-  const pending = all - completed;
-
-  if (isPending) return <div>로딩 중..</div>;
-  if (isError) return <div>에러 발생</div>;
+  if (isAllPending || isCompletedPending || isPending)
+    return <div>로딩 중..</div>;
+  if (isAllError || isCompletedError || isError) return <div>에러 발생</div>;
 
   return (
     <TodoDashboardSection>
@@ -39,7 +40,7 @@ const TodoDashboard = () => {
               <Folders />
             </div>
             <TodoDashboardCardContent>
-              {all} <br />
+              {all.length} <br />
               <span>All Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
@@ -54,7 +55,7 @@ const TodoDashboard = () => {
               <FileCheck />
             </div>
             <TodoDashboardCardContent>
-              {completed} <br />
+              {completed.length} <br />
               <span>Completed Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
@@ -69,7 +70,7 @@ const TodoDashboard = () => {
               <File />
             </div>
             <TodoDashboardCardContent>
-              {pending} <br />
+              {pending.length} <br />
               <span>Todo Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
