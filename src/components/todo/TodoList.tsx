@@ -1,27 +1,21 @@
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
-import { useSearchParams } from 'react-router-dom';
-import { useTodoContext } from '../../hooks/useTodoContext';
+import { useTodoListQuery } from '../../hooks/todo/useTodoListQuery';
 
 const TodoList = () => {
-  const [searchParams] = useSearchParams();
-  const selectedFilter = searchParams.get('filter');
+  const { data: todoList, isPending, isError } = useTodoListQuery();
 
-  const context = useTodoContext('TodoList');
-  const { isLoading, getFilteredTodoList } = context;
-
-  const filteredTodoList = getFilteredTodoList(selectedFilter);
+  if (isPending) return <div>로딩 중..</div>;
+  if (isError) return <div>에러 발생</div>;
 
   return (
     <TodoListSection>
       <TodoListHeader>Tasks</TodoListHeader>
       <TodoListContent>
-        {isLoading ? (
-          <p>로딩 중..</p>
-        ) : filteredTodoList.length === 0 ? (
+        {todoList?.length === 0 ? (
           <p>추가된 Todo 항목이 없습니다.</p>
         ) : (
-          filteredTodoList.map((todo) => <TodoItem key={todo.id} todo={todo} />)
+          todoList?.map((todo) => <TodoItem key={todo.id} todo={todo} />)
         )}
       </TodoListContent>
     </TodoListSection>

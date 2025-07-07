@@ -4,16 +4,30 @@ import { File, FileCheck, Folders } from 'lucide-react';
 import { PATH } from '../../constants/path';
 import { TODO_STATUS } from '../../constants/todo';
 import { COLOR } from '../../styles/color';
-import { useTodoContext } from '../../hooks/useTodoContext';
+import { useTodoListQuery } from '../../hooks/todo/useTodoListQuery';
 
 const TodoDashboard = () => {
   const [searchParams] = useSearchParams();
   const selectedFilter = searchParams.get('filter');
 
-  const context = useTodoContext('TodoDashboard');
-  const {
-    data: { all, completed, pending },
-  } = context;
+  const { data: todoList, isPending, isError } = useTodoListQuery();
+
+  const getFilteredTodoList = (filter?: string | null) => {
+    if (!todoList) return [];
+
+    if (!filter) return todoList;
+
+    return todoList.filter((todo) =>
+      filter === 'completed' ? todo.completed : !todo.completed
+    );
+  };
+
+  const all = getFilteredTodoList().length;
+  const completed = getFilteredTodoList(selectedFilter).length;
+  const pending = all - completed;
+
+  if (isPending) return <div>로딩 중..</div>;
+  if (isError) return <div>에러 발생</div>;
 
   return (
     <TodoDashboardSection>
@@ -25,7 +39,7 @@ const TodoDashboard = () => {
               <Folders />
             </div>
             <TodoDashboardCardContent>
-              {all.length} <br />
+              {all} <br />
               <span>All Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
@@ -40,7 +54,7 @@ const TodoDashboard = () => {
               <FileCheck />
             </div>
             <TodoDashboardCardContent>
-              {completed.length} <br />
+              {completed} <br />
               <span>Completed Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>
@@ -55,7 +69,7 @@ const TodoDashboard = () => {
               <File />
             </div>
             <TodoDashboardCardContent>
-              {pending.length} <br />
+              {pending} <br />
               <span>Todo Tasks</span>
             </TodoDashboardCardContent>
           </TodoDashboardCard>

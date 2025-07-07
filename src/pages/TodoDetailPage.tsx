@@ -1,28 +1,15 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import TodoItem, { ActionButton } from '../components/todo/TodoItem';
 import { PATH } from '../constants/path';
 import { COLOR } from '../styles/color';
-import { useTodoContext } from '../hooks/useTodoContext';
-import { useEffect, useState } from 'react';
-import type { Todo } from '../types/todo.type';
+import { useTodoQuery } from '../hooks/todo/useTodoQuery';
 
 const TodoDetailPage = () => {
-  const { id } = useParams();
+  const { data: todo, isPending, isError } = useTodoQuery();
 
-  const [todo, setTodo] = useState<Todo | null>(null);
-
-  const context = useTodoContext('TodoDetailPage');
-  const { getTodo } = context;
-
-  useEffect(() => {
-    const fetchTodo = async () => {
-      const response = await getTodo(id as string);
-      setTodo(response);
-    };
-
-    fetchTodo();
-  }, [id, getTodo]);
+  if (isPending) return <div>로딩 중..</div>;
+  if (isError) return <div>에러 발생</div>;
 
   return (
     <TodoDetailWrapper>
