@@ -22,7 +22,7 @@ const TodoItem = ({ todo }: Props) => {
   };
 
   return (
-    <li className="flex flex-row flex-wrap gap-4 items-center justify-between bg-white p-4 rounded-xl">
+    <li className="flex flex-row flex-wrap gap-4 items-center justify-between bg-white p-4 rounded-xl shadow-md">
       <Link
         to={`/todo/${id}`}
         className={
