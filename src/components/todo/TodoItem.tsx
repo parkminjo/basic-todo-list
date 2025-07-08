@@ -1,7 +1,5 @@
-import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { PATH } from '../../constants/path';
-import { COLOR } from '../../styles/color';
 import { useUpdateTodoMutation } from '../../hooks/todo/useUpdateTodoMutation';
 import { useDeleteTodoMutation } from '../../hooks/todo/useDeleteTodoMutation';
 import type { Todo } from '../../types/todo.type';
@@ -24,67 +22,33 @@ const TodoItem = ({ todo }: Props) => {
   };
 
   return (
-    <TodoItemWrapper>
-      <TodoItemLink to={`/todo/${id}`} $completed={completed}>
+    <li className="flex flex-row flex-wrap gap-4 items-center justify-between bg-white p-4 rounded-xl">
+      <Link
+        to={`/todo/${id}`}
+        className={
+          completed ? 'line-through hover:underline' : 'none hover:underline'
+        }
+      >
         {content}
-      </TodoItemLink>
-      <TodoItemActions>
-        <ActionButton
-          $bgColor={completed ? COLOR.PURPLE : COLOR.BLACK}
+      </Link>
+      <div className="flex flex-row flex-wrap gap-4">
+        <button
           onClick={() => updateTodoMutate({ id, currentCompleted: completed })}
+          className={`border-none text-white px-4 py-2 break-words align-middle hover:opacity-80 rounded-lg ${
+            completed ? 'bg-[#582be7]' : 'bg-[#242424]'
+          }`}
         >
           {completed ? '취소하기' : '완료하기'}
-        </ActionButton>
-        <ActionButton $bgColor={COLOR.RED} onClick={navigateAfterDelete}>
+        </button>
+        <button
+          onClick={navigateAfterDelete}
+          className="border-none text-white bg-[#ff4033] px-4 py-2 break-words align-middle hover:opacity-80 rounded-lg"
+        >
           삭제하기
-        </ActionButton>
-      </TodoItemActions>
-    </TodoItemWrapper>
+        </button>
+      </div>
+    </li>
   );
 };
-
-const TodoItemWrapper = styled.li`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  background-color: white;
-  padding: 1.25rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-`;
-
-const TodoItemLink = styled(Link)<{ $completed: boolean }>`
-  text-decoration: ${({ $completed }) =>
-    $completed ? 'line-through' : 'none'};
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const TodoItemActions = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1rem;
-`;
-
-export const ActionButton = styled.button<{ $bgColor?: string }>`
-  background-color: ${({ $bgColor = COLOR.ORANGE }) => $bgColor};
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  word-break: keep-all;
-  text-align: center;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
 
 export default TodoItem;
