@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import TodoItem, { ActionButton } from '../components/todo/TodoItem';
 import { PATH } from '../constants/path';
 import { COLOR } from '../styles/color';
@@ -12,27 +11,13 @@ const TodoDetailPage = () => {
   if (isError) return <div>에러 발생</div>;
 
   return (
-    <TodoDetailWrapper>
+    <section className="flex flex-col gap-4">
       {!todo ? <p>해당하는 Todo 항목이 없습니다.</p> : <TodoItem todo={todo} />}
-      <BackLink to={PATH.HOME}>
+      <Link to={PATH.HOME}>
         <ActionButton $bgColor={COLOR.BLACK}>돌아가기</ActionButton>
-      </BackLink>
-    </TodoDetailWrapper>
+      </Link>
+    </section>
   );
 };
-
-const TodoDetailWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const BackLink = styled(Link)`
-  flex: 1;
-
-  button {
-    width: 100%;
-  }
-`;
 
 export default TodoDetailPage;
