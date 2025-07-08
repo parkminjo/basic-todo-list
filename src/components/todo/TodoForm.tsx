@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { ActionButton } from './TodoItem';
-import { COLOR } from '../../styles/color';
 import { useAddTodoMutation } from '../../hooks/todo/useAddTodoMutation';
 
 const TodoForm = () => {
@@ -25,48 +22,22 @@ const TodoForm = () => {
   };
 
   return (
-    <div>
-      <TodoFormWrapper onSubmit={handleSubmit}>
-        <TodoFormInput
-          type="text"
-          value={content}
-          onChange={handleChange}
-          placeholder="할 일을 입력해주세요."
-        />
-        <SubmitButton $bgColor={COLOR.BLACK}>추가하기</SubmitButton>
-      </TodoFormWrapper>
-    </div>
+    <form onSubmit={handleSubmit} className="flex flex-row flex-wrap gap-2">
+      <input
+        type="text"
+        value={content}
+        onChange={handleChange}
+        placeholder="할 일을 입력해주세요."
+        className="flex-[8] text-base p-4 bg-white rounded-xl border border-[#ccc] focus:border-[#582be7] focus:outline-none"
+      />
+      <button
+        type="submit"
+        className="border-none text-white bg-[#242424] px-4 py-2 break-words align-middle hover:opacity-80 rounded-lg"
+      >
+        추가하기
+      </button>
+    </form>
   );
 };
-
-const TodoFormWrapper = styled.form`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-`;
-
-const TodoFormInput = styled.input`
-  flex: 8;
-  font-size: 0.5rem 1rem;
-  padding: 1rem;
-  background-color: white;
-  border: 1px solid ${COLOR.GRAY01};
-  border-radius: 0.5rem;
-
-  &::placeholder {
-    color: ${COLOR.GRAY02};
-  }
-
-  &:focus {
-    border-color: ${COLOR.PURPLE};
-    outline: none;
-  }
-`;
-
-const SubmitButton = styled(ActionButton)`
-  flex: 1;
-  text-align: center;
-`;
 
 export default TodoForm;
