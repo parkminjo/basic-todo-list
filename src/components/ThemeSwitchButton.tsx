@@ -9,7 +9,7 @@ const ThemeSwitchButton = () => {
   };
 
   return (
-    <button onClick={handleClick}>
+    <button onClick={handleClick} className="dark:text-white">
       {theme === 'light' ? <Moon /> : <Sun />}
     </button>
   );
