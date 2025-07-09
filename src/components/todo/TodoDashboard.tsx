@@ -30,7 +30,7 @@ const TodoDashboard = () => {
 
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">Quick Access</h2>
+      <h2 className="text-xl font-bold dark:text-white">Quick Access</h2>
       <ul className="flex flex-row flex-wrap gap-4">
         <li className="flex-[2]">
           <Link

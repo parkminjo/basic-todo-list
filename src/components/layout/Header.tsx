@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="h-[50px]">
       <div className="flex flex-row items-center max-w-3xl mx-auto p-4 justify-between">
-        <Link to={PATH.HOME} className="text-xl font-bold">
+        <Link to={PATH.HOME} className="text-xl font-bold dark:text-white">
           TODO
         </Link>
         <ThemeSwitchButton />

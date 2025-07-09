@@ -16,7 +16,7 @@ const TodoList = () => {
 
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">Tasks</h2>
+      <h2 className="text-xl font-bold dark:text-white">Tasks</h2>
       <ul className="flex flex-col gap-4">
         {todoList?.length === 0 ? (
           <p>추가된 Todo 항목이 없습니다.</p>
