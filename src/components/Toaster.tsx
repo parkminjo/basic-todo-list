@@ -1,10 +1,12 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { useToastStore } from '../store/useToastStore';
 
 const Toaster = () => {
   const { toasts } = useToastStore();
+  const [parent] = useAutoAnimate();
 
   return (
-    <ul className="fixed top-4 left-1/2 z-40 -translate-x-1/2">
+    <ul ref={parent} className="fixed top-4 right-4 z-40 min-w-60">
       {toasts.map((toast) => {
         return (
           <li
