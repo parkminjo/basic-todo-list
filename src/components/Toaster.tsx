@@ -1,14 +1,7 @@
-// import { useToastStore } from '../store/useToastStore';
+import { useToastStore } from '../store/useToastStore';
 
 const Toaster = () => {
-  // const { toasts } = useToastStore();
-
-  const toasts = [
-    {
-      id: '11',
-      message: 'This is a toast message',
-    },
-  ];
+  const { toasts } = useToastStore();
 
   return (
     <ul className="fixed top-4 left-1/2 z-40 -translate-x-1/2">
