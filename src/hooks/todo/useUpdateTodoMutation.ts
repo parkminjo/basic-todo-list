@@ -11,7 +11,7 @@ export const useUpdateTodoMutation = () => {
 	return useMutation({
 		mutationFn: updateTodo,
 		onSuccess: () => {
-			addToast('투두 완료 상태가 성공적으로 변경되었습니다.')
+			addToast('투두 완료 상태가 변경되었습니다.')
 		},
 		onSettled: () => queryClient.invalidateQueries({queryKey: [QUERY_KEY.TODO_LIST]})
 	})

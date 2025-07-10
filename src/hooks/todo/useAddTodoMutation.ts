@@ -10,7 +10,7 @@ export const useAddTodoMutation = () => {
 	return useMutation({
     mutationFn: addTodo,
 		onSuccess: () => {
-			addToast('투두를 성공적으로 추가했습니다.')
+			addToast('투두를 추가했습니다.')
 		},
 		onSettled: () => queryClient.invalidateQueries({queryKey: [QUERY_KEY.TODO_LIST]})
   })
