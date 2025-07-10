@@ -4,8 +4,18 @@ import RootLayout from './components/layout/RootLayout';
 import HomePage from './pages/HomePage';
 import TodoDetailPage from './pages/TodoDetailPage';
 import QueryProvider from './components/provider/QueryProvider';
+import { useEffect } from 'react';
+import { useThemeStore } from './store/useThemeStore';
 
 const App = () => {
+  const { theme } = useThemeStore();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove('dark', 'light');
+    root.classList.add(theme);
+  }, [theme]);
+
   return (
     <QueryProvider>
       <Routes>
