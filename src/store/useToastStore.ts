@@ -1,7 +1,13 @@
 import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
+
+type Toast = {
+	id: string,
+	message: string
+}
 
 type State = {
-	toasts: { id: string, message: string }[],
+	toasts: { id: Toast['id'], message: Toast['message'] }[],
 	
 }
 
@@ -10,17 +16,23 @@ type Actions = {
   removeToast: (toastId: string) => void,
 }
 
-export const useToastStore = create<State & Actions>((set) => ({
+export const useToastStore = create(immer<State & Actions>((set) => ({
 	toasts: [],
 	addToast: (message) => {
 		set(prevState => {
-			const toastId = crypto.randomUUID();
-			return {toasts: [...prevState.toasts, { id: toastId, message }]}
+			const id = crypto.randomUUID();
+			
+			const nextToast = { id, message };
+			prevState.toasts.push(nextToast)
 		})
 	},
 	removeToast: (toastId) => {
 		set(prevState => {
-			return {toasts: prevState.toasts.filter(toast => toast.id !== toastId)}
+			const targetIdx = prevState.toasts.findIndex((prevToast: Toast) => prevToast.id === toastId);
+
+			if (targetIdx !== -1) {
+				prevState.toasts.splice(targetIdx, 1)
+			} 
 		})
 	}
-}))
+})))
