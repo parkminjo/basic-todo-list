@@ -1,43 +1,48 @@
 import { create } from "zustand";
+import { combine } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-type Toast = {
-	id: string,
-	message: string
+interface Toast {
+  id: string;
+  message: string;
 }
 
-type State = {
-	toasts: { id: Toast['id'], message: Toast['message'] }[],
-	
+interface InitialState {
+  toasts: Toast[];
 }
 
-type Actions = {
-	addToast: (message: string) => void,
-  removeToast: (toastId: string) => void,
-}
+const initialState: InitialState = {
+  toasts: [],
+};
 
-export const useToastStore = create(immer<State & Actions>((set, get) => ({
-	toasts: [],
-	addToast: (message) => {
-		set(prevState => {
-			const id = crypto.randomUUID();
-			const { removeToast } = get();
-			
-			const nextToast = { id, message };
-			prevState.toasts.push(nextToast);
+export const useToastStore = create(
+  immer(
+    combine(initialState, (set) => {
+      const addToast = (message: string) => {
+        const id = crypto.randomUUID();
 
-			setTimeout(() => {
-				removeToast(id)
-			}, 1500)
-		});
-	},
-	removeToast: (toastId) => {
-		set(prevState => {
-			const targetIdx = prevState.toasts.findIndex((prevToast: Toast) => prevToast.id === toastId);
+        set((state) => {
+          state.toasts.push({ id, message });
+        });
 
-			if (targetIdx !== -1) {
-				prevState.toasts.splice(targetIdx, 1)
-			} 
-		})
-	}
-})))
+        setTimeout(() => {
+          removeToast(id);
+        }, 1500);
+      };
+
+      const removeToast = (toastId: string) => {
+        set((state) => {
+          const index = state.toasts.findIndex((toast) => toast.id === toastId);
+          if (index !== -1) {
+            state.toasts.splice(index, 1);
+          }
+        });
+      };
+
+      return {
+        addToast,
+        removeToast,
+      };
+    })
+  )
+);
