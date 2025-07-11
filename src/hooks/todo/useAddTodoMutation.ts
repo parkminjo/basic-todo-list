@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { addTodo } from "../../api/todoApi"
 import { QUERY_KEY } from "../../constants/queryKey"
 import { useToastStore } from "../../store/useToastStore"
+import { TODO_INFO_MESSAGE } from "../../constants/infoMessage"
 
 export const useAddTodoMutation = () => {
 	const queryClient = useQueryClient()
@@ -10,7 +11,7 @@ export const useAddTodoMutation = () => {
 	return useMutation({
     mutationFn: addTodo,
 		onSuccess: () => {
-			addToast('투두를 추가했습니다.')
+			addToast(TODO_INFO_MESSAGE.POST_TODO)
 		},
 		onSettled: () => queryClient.invalidateQueries({queryKey: [QUERY_KEY.TODO_LIST]})
   })

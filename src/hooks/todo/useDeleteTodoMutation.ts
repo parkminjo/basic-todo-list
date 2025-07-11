@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteTodo } from "../../api/todoApi"
 import { QUERY_KEY } from "../../constants/queryKey"
 import { useToastStore } from "../../store/useToastStore";
+import { TODO_INFO_MESSAGE } from "../../constants/infoMessage";
 
 export const useDeleteTodoMutation = () => {
 	const queryClient = useQueryClient();
@@ -11,7 +12,7 @@ export const useDeleteTodoMutation = () => {
 	return useMutation({
     mutationFn: deleteTodo,
 		onSuccess: () => {
-			addToast('투두가 삭제되었습니다.')
+			addToast(TODO_INFO_MESSAGE.DELETE_TODO)
 		},
 		onSettled: () => queryClient.invalidateQueries({queryKey: [QUERY_KEY.TODO_LIST]})
   })
