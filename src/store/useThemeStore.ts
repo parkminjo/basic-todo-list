@@ -1,18 +1,23 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { combine, persist } from "zustand/middleware";
 
-type State = {
-	theme: string
+type Theme = 'light' | 'dark';
+
+interface InitialState {
+	theme: Theme;
 }
 
-type Actions = {
-	setTheme: (theme: string) => void
+const initialState: InitialState = {
+	theme: 'light',
 }
 
-export const useThemeStore = create(persist<State & Actions>(
-	(set) => ({
-	theme:'light',
-	setTheme: (theme) => set({theme})
-}), {
-	name: 'theme-storage',}
-))
+export const useThemeStore = create(
+	persist(
+		combine(initialState, (set) => ({
+			setTheme: (theme: Theme) => set({ theme }),
+		})),
+		{
+			name: 'theme-storage'
+		}
+	)
+);
