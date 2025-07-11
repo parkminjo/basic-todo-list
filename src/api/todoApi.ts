@@ -18,7 +18,9 @@ export const getTodo = async (id: Todo['id']) => {
 	}
 };
 
-export const getTodoList = async (filter?: string | null) => {
+export type TodoFilter = 'completed' | 'pending';
+
+export const getTodoList = async (filter?: TodoFilter) => {
 	try {
 		const searchParams = new URLSearchParams();
 
@@ -30,7 +32,7 @@ export const getTodoList = async (filter?: string | null) => {
 			searchParams.append(TODO_STATUS.COMPLETED, 'false');
 		}
 
-		const { data }: { data: Todo[] } =  await todoClient.get(TODO_API.BY_FILTER(searchParams));
+		const { data } =  await todoClient.get<Todo[]>(TODO_API.BY_FILTER(searchParams));
 		return data;
 	} catch (error) {
 		console.error('할 일 목록 불러오기 실패', error);
