@@ -1,6 +1,7 @@
 import TodoItem from './TodoItem';
 import { useTodoListQuery } from '../../hooks/todo/useTodoListQuery';
 import { useFilterParams } from '../../hooks/todo/useFilterParams';
+import { TODO_ERROR_MESSAGE } from '../../constants/errorMessage';
 
 const TodoList = () => {
   const selectedFilter = useFilterParams();
@@ -12,7 +13,7 @@ const TodoList = () => {
   } = useTodoListQuery(selectedFilter);
 
   if (isPending) return <div>로딩 중..</div>;
-  if (isError) return <div>에러 발생</div>;
+  if (isError) return <div>{TODO_ERROR_MESSAGE.GET_TODO_LIST}</div>;
 
   return (
     <section className="flex flex-col gap-4">
